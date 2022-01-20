@@ -31,20 +31,21 @@ class Visitor(NodeVisitor):
         self.path.pop()
 
 
-def plot_ast(source):
+def plot_ast(source: str, fname: str) -> None:
     ast = parse(source)
 
     visitor = Visitor()
     visitor.visit(ast)
     G = visitor.graph
-
     pos = graphviz_layout(G, prog='dot')
+
+    plt.figure(figsize=(10, 10))
     nx.draw(G, pos)
     nx.draw_networkx_labels(G, pos, visitor.labels)
 
-    plt.show()
+    plt.savefig(fname)
 
 
 if __name__ == '__main__':
     source = getsource(fibonacci)
-    plot_ast(source)
+    plot_ast(source, 'artifacts/AST.png')
