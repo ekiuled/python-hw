@@ -3,24 +3,21 @@ from typing import Any
 from inspect import getsource
 from ast import parse, unparse, NodeVisitor, AST
 
-import networkx as nx
-from networkx.drawing.nx_agraph import graphviz_layout
-import matplotlib.pyplot as plt
+import pygraphviz as pvg
 
 from fibonacci import fibonacci
 
 
 class Visitor(NodeVisitor):
     def __init__(self):
-        self.graph = nx.Graph()
-        self.labels = {}
+        self.graph = pvg.AGraph()
         self.path = []
         self.count = 0
 
     def generic_visit(self, node: AST) -> Any:
         self.count = id = self.count + 1
         name = f'{type(node).__name__}\n{unparse(node)}'
-        self.labels[id] = name
+        self.graph.add_node(id, label=name, shape='box', fontname='JetBrains Mono')
 
         if self.path:
             parent = self.path[-1]
@@ -30,20 +27,17 @@ class Visitor(NodeVisitor):
         super().generic_visit(node)
         self.path.pop()
 
+    def build(self) -> pvg.AGraph:
+        self.graph.layout(prog='dot')
+        return self.graph
+
 
 def plot_ast(source: str, fname: str) -> None:
     ast = parse(source)
 
     visitor = Visitor()
     visitor.visit(ast)
-    G = visitor.graph
-    pos = graphviz_layout(G, prog='dot')
-
-    plt.figure(figsize=(10, 10))
-    nx.draw(G, pos)
-    nx.draw_networkx_labels(G, pos, visitor.labels)
-
-    plt.savefig(fname)
+    visitor.build().draw(fname)
 
 
 if __name__ == '__main__':
