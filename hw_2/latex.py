@@ -12,13 +12,17 @@ def latex_table(table: list[list]) -> str:
 
     columns = 'l|' * column_amount
     preamble = [f'\\begin{{tabular}}{{|{columns}}}', '\\hline']
-    epilogue = ['\\end{tabular}']
+    epilogue = ['\\end{tabular} \\\\']
     contents = list(map(latex_row_curried(column_amount), table))
     return '\n'.join(preamble + contents + epilogue)
 
 
+def latex_image(filepath: str) -> str:
+    return f'\\includegraphics[width=\\textwidth]{{{filepath}}} \\\\'
+
+
 def latex(contents: list[str]):
-    preamble = ['\\documentclass{article}', '\\begin{document}']
+    preamble = ['\\documentclass{article}', '\\usepackage{graphicx}', '\\begin{document}']
     epilogue = ['\\end{document}']
     return '\n'.join(preamble + contents + epilogue)
 
@@ -31,5 +35,6 @@ if __name__ == '__main__':
              [3.14]]
     with open('artifacts/easy.tex', 'w') as tex:
         tex.write(latex([
-            latex_table(table)
+            latex_table(table),
+            latex_image('AST.png')
         ]))
