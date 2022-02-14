@@ -1,3 +1,6 @@
+from astplot.plot_fibonacci import plot_fibonacci
+
+
 def latex_row_curried(columns: int):
     def latex_row(row: list) -> str:
         missing_columns = columns - len(row)
@@ -33,8 +36,12 @@ if __name__ == '__main__':
              [4, 5],
              [6, 7, 8, 9],
              [3.14]]
-    with open('artifacts/easy.tex', 'w') as tex:
+
+    image = 'AST.png'
+    plot_fibonacci(f'artifacts/{image}')
+
+    with open('artifacts/example.tex', 'w') as tex:
         tex.write(latex([
             latex_table(table),
-            latex_image('AST.png')
+            latex_image(image)
         ]))
