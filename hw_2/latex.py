@@ -37,8 +37,8 @@ if __name__ == '__main__':
              [6, 7, 8, 9],
              [3.14]]
 
-    image = 'AST.png'
-    plot_fibonacci(f'artifacts/{image}')
+    image = 'artifacts/AST.png'
+    plot_fibonacci(image)
 
     with open('artifacts/example.tex', 'w') as tex:
         tex.write(latex([
