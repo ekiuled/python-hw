@@ -13,7 +13,7 @@ class SizeMismatch(Exception):
 class Matrix:
     @classmethod
     def random(cls, low: int, high: int, n: int, m: int) -> Matrix:
-        return Matrix(np.random.randint(low, high, (n, m)).tolist())
+        return cls(np.random.randint(low, high, (n, m)).tolist())
 
     def __init__(self, values: list[list]):
         self.values = values
@@ -29,21 +29,21 @@ class Matrix:
     def __add__(self, other: Matrix) -> Matrix:
         if self.n != other.n or self.m != other.m:
             raise SizeMismatch(self.n, self.m, other.n, other.m)
-        return Matrix([[x1 + x2 for x1, x2 in zip(row1, row2)]
-                       for row1, row2 in zip(self.values, other.values)])
+        return type(self)([[x1 + x2 for x1, x2 in zip(row1, row2)]
+                           for row1, row2 in zip(self.values, other.values)])
 
     def __mul__(self, other: Matrix) -> Matrix:
         if self.n != other.n or self.m != other.m:
             raise SizeMismatch(self.n, self.m, other.n, other.m)
-        return Matrix([[x1 * x2 for x1, x2 in zip(row1, row2)]
-                       for row1, row2 in zip(self.values, other.values)])
+        return type(self)([[x1 * x2 for x1, x2 in zip(row1, row2)]
+                           for row1, row2 in zip(self.values, other.values)])
 
     def __matmul__(self, other: Matrix) -> Matrix:
         if self.m != other.n:
             raise SizeMismatch(self.n, self.m, other.n, other.m)
-        return Matrix([[sum([self.values[i][k] * other.values[k][j] for k in range(self.m)])
-                        for j in range(other.m)]
-                       for i in range(self.n)])
+        return type(self)([[sum([self.values[i][k] * other.values[k][j] for k in range(self.m)])
+                            for j in range(other.m)]
+                           for i in range(self.n)])
 
 
 if __name__ == '__main__':
