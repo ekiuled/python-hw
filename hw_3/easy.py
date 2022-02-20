@@ -21,7 +21,7 @@ class Matrix:
         self.m = len(values[0])
 
     def __repr__(self) -> str:
-        return repr(self.values)
+        return f'{type(self).__name__}({repr(self.values)})'
 
     def __str__(self) -> str:
         return '\n'.join(['\t'.join(map(str, row)) for row in self.values])
