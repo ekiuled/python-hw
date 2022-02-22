@@ -1,10 +1,7 @@
 from typing import Any
 
-from inspect import getsource
 import ast
 import pygraphviz as pvg
-
-from fibonacci import fibonacci
 
 
 class Visitor(ast.NodeVisitor):
@@ -83,8 +80,3 @@ def plot_ast(source: str, fname: str) -> None:
     visitor = Visitor()
     visitor.visit(AST)
     visitor.build().draw(fname)
-
-
-if __name__ == '__main__':
-    source = getsource(fibonacci)
-    plot_ast(source, 'artifacts/AST.png')

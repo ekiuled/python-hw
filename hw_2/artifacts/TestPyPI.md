@@ -1,0 +1,1 @@
+Ссылка на репозиторий с первой ДЗ в PyPI: https://test.pypi.org/project/astplot/0.0.1/
