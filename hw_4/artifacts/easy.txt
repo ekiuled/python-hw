@@ -1,0 +1,3 @@
+ 26.857 ms	synchronous(n)
+ 70.436 ms	threading(n)
+ 34.183 ms	multiprocessing(n)
