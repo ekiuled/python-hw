@@ -1,5 +1,6 @@
 import asyncio
 import aiohttp
+import aiofiles
 
 from datetime import datetime
 import sys
@@ -9,8 +10,9 @@ async def next_image(url: str, session: aiohttp.ClientSession):
     async with session.get(url) as response:
         image = await response.read()
         timestamp = datetime.now().strftime('%H:%M:%S.%f')[:-4]
-        with open(f'artifacts/image_{timestamp}.jpg', 'wb') as file:
-            file.write(image)
+
+        async with aiofiles.open(f'artifacts/image_{timestamp}.jpg', 'wb') as file:
+            await file.write(image)
 
 
 async def main(url: str, n: int):
