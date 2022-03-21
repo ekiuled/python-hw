@@ -35,13 +35,13 @@ def multiprocessing(n: int):
         process.join()
 
 
-def time(stmt: str, timeit_number: int = 50):
+def time(stmt: str, timeit_number: int = 10):
     seconds = timeit(stmt, number=timeit_number, globals=globals()) / timeit_number
-    print(f'{seconds * 1000 : .3f} ms\t{stmt}')
+    print(f'{seconds * 1000 :.1f} ms\t{stmt}')
 
 
 if __name__ == '__main__':
-    n = 10_000
+    n = 100_000
     time('synchronous(n)')
     time('threading(n)')
     time('multiprocessing(n)')
