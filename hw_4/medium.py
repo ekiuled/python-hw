@@ -39,7 +39,7 @@ def time(n_jobs: int, *, log_filename: str, time_file: TextIO, timeit_number: in
                                        executor=executor,
                                        current_function=current_function),
                      number=timeit_number) / timeit_number
-    print(f'{n_jobs}\t{seconds * 1000 :.3f} ms', file=time_file)
+    print(f'{n_jobs}\t{seconds:.3f} s', file=time_file)
 
 
 if __name__ == '__main__':
